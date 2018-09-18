@@ -261,11 +261,11 @@ nav h1 a {
 
 .inside #map-container {
     background: blue none repeat scroll 0 0;
-    height: 87%;
-    position: fixed;
+    height: 45vh;
+    position: relative;
     right: 0;
     top: 80px;
-    width: 50%;
+    width: 100%;
 }
 
 .inside #map {
@@ -277,7 +277,7 @@ nav h1 a {
 .inside #footer {
     bottom: 0;
     position: absolute;
-    width: 50%;
+    width: 100%;
 }
 
 #restaurant-name {
@@ -319,8 +319,8 @@ nav h1 a {
 #reviews-container {
     border-bottom: 1px solid #d9d9d9;
     border-top: 1px solid #fff;
-    padding: 140px 40px 30px;
-    width: 50%;
+    padding: 90px 40px 30px;
+    width: 100%;
 }
 
 #reviews-container {
@@ -341,15 +341,6 @@ nav h1 a {
 }
 
 #reviews-list li {
-    /* background-color: #fff;
-    border: 2px solid #f3f3f3;
-    display: block;
-    list-style-type: none;
-    margin: 0 0 30px;
-    overflow: hidden;
-    padding: 0 20px 20px;
-    position: relative;
-    width: 85%; */
     width: 85%;
     background-color: #fff;
     border-radius: 5px;
@@ -373,7 +364,6 @@ nav h1 a {
 }
 
 #addHours {
-    border: 3px solid black;
     width: 85%;
     padding: 15px;
     border-radius: 10px;
@@ -384,6 +374,20 @@ nav h1 a {
     #restaurants-list li {
         width: calc((100%/2) - 40px);
         margin: 10px;
+    }
+}
+
+@media screen and (min-width: 800px) {
+    .inside #map-container {
+        height: 87%;
+        position: fixed;
+        right: 0;
+        top: 80px;
+        width: 45%;
+    }
+    #restaurant-container,
+    #reviews-container {
+        width: 55%;
     }
 }
 
