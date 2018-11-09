@@ -1,15 +1,15 @@
 let cacheName = `restaurant-v1`;
 let filesToCache = [
-    "/",
+    // "/",
     "/index.html",
     "/restaurant.html",
     "/css/styles.css",
-    "/data/restaurant.json",
+    "/data/restaurants.json",
     "/js/dbhelper.js",
     "/js/main.js",
     "/js/restaurant_info.js",
     "/img/1.jpg",
-    "/img/3.jpg",
+    "/img/2.jpg",
     "/img/3.jpg",
     "/img/4.jpg",
     "/img/5.jpg",
