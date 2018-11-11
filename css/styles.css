@@ -85,7 +85,7 @@ section {
 
 nav {
     width: 100%;
-    height: 40px;
+    height: 60px;
     background-color: #252831;
     text-align: center;
 }
@@ -259,12 +259,32 @@ nav h1 a {
     z-index: 1000;
 }
 
+.inside #maincontent {
+    display: flex;
+    flex-wrap: wrap;
+    width: 95%;
+    margin: auto;
+}
+
+#maincontent section {
+    width: 100%;
+}
+
 .inside #map-container {
     background: blue none repeat scroll 0 0;
     height: 45vh;
     position: relative;
     right: 0;
-    top: 80px;
+    top: 95px;
+    width: 100%;
+}
+
+#image #restaurant-img {
+    height: auto;
+    background-color: #ccc;
+    display: block;
+    margin: 0;
+    max-width: 100%;
     width: 100%;
 }
 
@@ -272,16 +292,6 @@ nav h1 a {
     background-color: #ccc;
     height: 100%;
     width: 100%;
-}
-
-.inside #footer {
-    bottom: 0;
-    position: absolute;
-    width: 100%;
-}
-
-.inside nav {
-    width: 110%;
 }
 
 #restaurant-name {
@@ -293,10 +303,6 @@ nav h1 a {
     margin: 15px 0 0;
     text-transform: uppercase;
     line-height: 1.1;
-}
-
-#restaurant-img {
-    width: 90%;
 }
 
 #restaurant-address {
@@ -382,20 +388,20 @@ nav h1 a {
 }
 
 @media screen and (min-width: 800px) {
-    .inside #map-container {
-        height: 87%;
-        position: absolute;
-        right: 0;
-        top: 80px;
-        width: 40%;
+    #restaurant-container #image {
+        max-height: 700px;
     }
-    #restaurant-container,
-    #reviews-container {
-        width: 60%;
+}
+
+@media screen and (min-width: 1000px) {
+    #restaurant-container #imageHours {
+        width: 100%;
+        display: flex;
+        flex: auto;
     }
-    .inside header,
-    .inside #footer {
-        width: 96%;
+    #imageHours #image,
+    #imageHours #addHours {
+        width: 50%;
     }
 }
 
