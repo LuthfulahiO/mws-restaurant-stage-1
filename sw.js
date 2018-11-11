@@ -27,16 +27,23 @@ let filesToCache = [
 
 
 
-self.addEventListener("install", (event) => {
+self.addEventListener("install", event => {
     console.log("[Service Worker] installing ");
 
     event.waitUntil(
         caches.open(cacheName)
-        .then((cache) => {
-            console.log("[Service Worker] caching all files");
-            cache.addAll(filesToCache);
+        .then(cache => {
+            return cache.addAll(filesToCache);
         })
-        // .then(() => self.skipWaiting())
-        .catch((err) => { console.log("error occured in caching files ==> ") })
+        .then(() => self.skipWaiting())
+        .catch(err => { console.log("error occured in caching files ==> ", err) })
+    );
+});
+self.addEventListener('fetch', event => {
+    event.respondWith(
+        caches.match(event.request, { ignoreSearch: true })
+        .then(response => {
+            return response || fetch(event.request);
+        })
     );
 });
