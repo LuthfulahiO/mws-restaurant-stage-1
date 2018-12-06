@@ -1,0 +1,13 @@
+{
+    "short_name": "ResReview",
+    "name": "Restaurant Review",
+    "icons": [{
+        "src": "/img/icon.jpeg",
+        "type": "image/jpeg",
+        "sizes": "512x512"
+    }],
+    "start_url": "/",
+    "background_color": "#fff",
+    "display": "standalone",
+    "theme_color": "#fff"
+}

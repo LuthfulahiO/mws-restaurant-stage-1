@@ -7,6 +7,7 @@ let filesToCache = [
     "/data/restaurants.json",
     "/js/dbhelper.js",
     "/js/main.js",
+    "/js/idb.js",
     "/js/restaurant_info.js",
     "/img/1.jpg",
     "/img/2.jpg",
@@ -36,12 +37,16 @@ self.addEventListener("install", event => {
             return cache.addAll(filesToCache);
         })
         .then(() => self.skipWaiting())
-        .catch(err => { console.log("error occured in caching files ==> ", err) })
+        .catch(err => {
+            console.log("error occured in caching files ==> ", err)
+        })
     );
 });
 self.addEventListener('fetch', event => {
     event.respondWith(
-        caches.match(event.request, { ignoreSearch: true })
+        caches.match(event.request, {
+            ignoreSearch: true
+        })
         .then(response => {
             return response || fetch(event.request);
         })
