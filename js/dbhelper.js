@@ -14,30 +14,70 @@ class DBHelper {
   /**
    * Fetch all restaurants.
    */
+
+  static fetchRestaurantsFromIdb() {
+    dbPromise.then(db => {
+      if (!db) return;
+      let store = db
+        .transaction("restaurantStore")
+        .objectStore("restaurantStore");
+
+      store.getAll();
+    });
+  }
+
+  static storeRestaurants(restaurants) {
+    const dbPromise = idb.open('resReview', 1, upgradeDb => {
+      upgradeDb.createObjectStore('restaurantStore', {
+        keyPath: 'id'
+      });
+    });
+    dbPromise.then(db => {
+      let store = db
+        .transaction('restaurantStore', 'readwrite')
+        .objectStore('restaurantStore');
+      restaurants.forEach(element => {
+        store.put(element);
+      });
+    });
+  }
+
   static fetchRestaurants(callback) {
     const dbPromise = idb.open('resReview', 1, upgradeDb => {
       upgradeDb.createObjectStore('restaurantStore', {
         keyPath: 'id'
       });
     });
-    fetch(DBHelper.DATABASE_URL)
-      .then(res => res.json())
-      .then(restaurants => {
-        // console.log(restaurants);
-        restaurants.forEach(element => {
-          dbPromise.then(db => {
-            let tx = db.transaction('restaurantStore', 'readwrite');
-            let store = tx.objectStore('restaurantStore');
-            store.put(element);
-          })
+    if (navigator.serviceWorker.controller) {
+      console.log('This page is currently controlled by:');
+      fetch(DBHelper.DATABASE_URL)
+        .then(res => res.json())
+        .then(restaurants => {
+          console.log(restaurants);
+          DBHelper.storeRestaurants(restaurants);
+          console.log('done');
+          callback(null, restaurants);
+        })
+        .catch(err => {
+          console.log('not done');
+          callback(err, null);
         });
-        console.log('done');
-        callback(null, restaurants);
-      })
-      .catch(err => {
-        console.log('not done');
-        callback(err, null);
-      });
+
+    } else {
+      console.log('This page is not currently controlled');
+      dbPromise.then(db => {
+          if (!db) return;
+          let store = db
+            .transaction("restaurantStore")
+            .objectStore("restaurantStore");
+
+          return store.getAll();
+        })
+        .then(restaurants => {
+          console.log(restaurants);
+          callback(null, restaurants);
+        })
+    }
   }
 
   /**

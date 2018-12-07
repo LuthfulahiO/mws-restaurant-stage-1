@@ -30,15 +30,17 @@
     </section>
     <section>
       <div class="filter-options">
-        <h2>Filter Results</h2>
-        <label for="neighborhoods">Select Neighbourhood</label>
-        <select id="neighborhoods-select" name="neighborhoods" onchange="updateRestaurants()">
-          <option value="all">All Neighborhoods</option>
-        </select>
-        <label for="cuisines">Select Cuisines</label>
-        <select id="cuisines-select" name="cuisines" onchange="updateRestaurants()">
-          <option value="all">All Cuisines</option>
-        </select>
+        <h2 id="filCol">Filter Results</h2>
+        <label for="neighborhoods" aria-label="neighborhoods">Select Neighbourhood
+          <select id="neighborhoods-select" name="neighborhoods" onchange="updateRestaurants()">
+            <option value="all">All Neighborhoods</option>
+          </select>
+        </label>
+        <label for="cuisines" aria-label="cuisines">Select Cuisines
+          <select id="cuisines-select" name="cuisines" onchange="updateRestaurants()">
+            <option value="all">All Cuisines</option>
+          </select>
+        </label>
       </div>
       <ul id="restaurants-list"></ul>
     </section>
