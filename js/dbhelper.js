@@ -14,47 +14,26 @@ class DBHelper {
   /**
    * Fetch all restaurants.
    */
-
-  static fetchRestaurantsFromIdb() {
-    dbPromise.then(db => {
-      if (!db) return;
-      let store = db
-        .transaction("restaurantStore")
-        .objectStore("restaurantStore");
-
-      store.getAll();
-    });
-  }
-
-  static storeRestaurants(restaurants) {
-    const dbPromise = idb.open('resReview', 1, upgradeDb => {
-      upgradeDb.createObjectStore('restaurantStore', {
-        keyPath: 'id'
-      });
-    });
-    dbPromise.then(db => {
-      let store = db
-        .transaction('restaurantStore', 'readwrite')
-        .objectStore('restaurantStore');
-      restaurants.forEach(element => {
-        store.put(element);
-      });
-    });
-  }
-
   static fetchRestaurants(callback) {
     const dbPromise = idb.open('resReview', 1, upgradeDb => {
       upgradeDb.createObjectStore('restaurantStore', {
         keyPath: 'id'
       });
     });
-    if (navigator.serviceWorker.controller) {
+    if (!navigator.serviceWorker.controller) {
       console.log('This page is currently controlled by:');
       fetch(DBHelper.DATABASE_URL)
         .then(res => res.json())
         .then(restaurants => {
           console.log(restaurants);
-          DBHelper.storeRestaurants(restaurants);
+          dbPromise.then(db => {
+            let store = db
+              .transaction('restaurantStore', 'readwrite')
+              .objectStore('restaurantStore');
+            restaurants.forEach(element => {
+              store.put(element);
+            });
+          });
           console.log('done');
           callback(null, restaurants);
         })
