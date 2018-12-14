@@ -53,7 +53,26 @@
         </section>
         <!-- end restaurant -->
         <!-- Beginning reviews -->
+
         <section id="reviews-container">
+            <form id="addReview" method="POST">
+                <label for="name" aria-label="name">
+                    <input type="text" id="reviewerName" name="name" placeholder="Enter Name">
+                </label>
+
+                <label for="name" aria-label="name">
+                    <input type="number" id="ratingValue" name="rating" placeholder="Enter Rating" min="0" max="5">
+                </label>
+
+                <label for="name" aria-label="comments">
+                    Comments <br>
+                    <textarea name="comments" id="reviewerComment" cols="30" rows="10"></textarea>
+                </label>
+
+                <input type="submit" value="Submit">
+
+            </form>
+            <button id="hello">Hello</button>
             <ul id="reviews-list"></ul>
         </section>
         <!-- End reviews -->

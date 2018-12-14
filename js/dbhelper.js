@@ -181,6 +181,17 @@ class DBHelper {
     });
   }
 
+  static fetchRestaurantReviews(id) {
+    return fetch(`http://localhost:1337/reviews/?restaurant_id=${id}`)
+      .then(response => {
+        return response.json();
+      })
+      .then(reviews => {
+        // DBHelper.saveReviewsToIdb(reviews);
+        return reviews;
+      });
+  }
+
   /**
    * Restaurant page URL.
    */
