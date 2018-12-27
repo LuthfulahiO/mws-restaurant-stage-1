@@ -17,7 +17,7 @@ class DBHelper {
   static fetchRestaurants(callback) {
     const dbPromise = idb.open('resReview', 1, upgradeDb => {
       upgradeDb.createObjectStore('restaurantStore', {
-        keyPath: 'id'
+        keyPath: 'id',
       });
     });
     if (!navigator.serviceWorker.controller) {
@@ -25,7 +25,6 @@ class DBHelper {
       fetch(DBHelper.DATABASE_URL)
         .then(res => res.json())
         .then(restaurants => {
-          console.log(restaurants);
           dbPromise.then(db => {
             let store = db
               .transaction('restaurantStore', 'readwrite')
@@ -41,21 +40,20 @@ class DBHelper {
           console.log('not done');
           callback(err, null);
         });
-
     } else {
       console.log('This page is not currently controlled');
-      dbPromise.then(db => {
+      dbPromise
+        .then(db => {
           if (!db) return;
           let store = db
-            .transaction("restaurantStore")
-            .objectStore("restaurantStore");
+            .transaction('restaurantStore')
+            .objectStore('restaurantStore');
 
           return store.getAll();
         })
         .then(restaurants => {
-          console.log(restaurants);
           callback(null, restaurants);
-        })
+        });
     }
   }
 
@@ -74,7 +72,7 @@ class DBHelper {
           callback(null, restaurant);
         } else {
           // Restaurant does not exist in the database
-          callback("Restaurant does not exist", null);
+          callback('Restaurant does not exist', null);
         }
       }
     });
@@ -118,7 +116,7 @@ class DBHelper {
   static fetchRestaurantByCuisineAndNeighborhood(
     cuisine,
     neighborhood,
-    callback
+    callback,
   ) {
     // Fetch all restaurants
     DBHelper.fetchRestaurants((error, restaurants) => {
@@ -126,11 +124,11 @@ class DBHelper {
         callback(error, null);
       } else {
         let results = restaurants;
-        if (cuisine != "all") {
+        if (cuisine != 'all') {
           // filter by cuisine
           results = results.filter(r => r.cuisine_type == cuisine);
         }
-        if (neighborhood != "all") {
+        if (neighborhood != 'all') {
           // filter by neighborhood
           results = results.filter(r => r.neighborhood == neighborhood);
         }
@@ -150,11 +148,11 @@ class DBHelper {
       } else {
         // Get all neighborhoods from all restaurants
         const neighborhoods = restaurants.map(
-          (v, i) => restaurants[i].neighborhood
+          (v, i) => restaurants[i].neighborhood,
         );
         // Remove duplicates from neighborhoods
         const uniqueNeighborhoods = neighborhoods.filter(
-          (v, i) => neighborhoods.indexOf(v) == i
+          (v, i) => neighborhoods.indexOf(v) == i,
         );
         callback(null, uniqueNeighborhoods);
       }
@@ -174,7 +172,7 @@ class DBHelper {
         const cuisines = restaurants.map((v, i) => restaurants[i].cuisine_type);
         // Remove duplicates from cuisines
         const uniqueCuisines = cuisines.filter(
-          (v, i) => cuisines.indexOf(v) == i
+          (v, i) => cuisines.indexOf(v) == i,
         );
         callback(null, uniqueCuisines);
       }
@@ -216,11 +214,12 @@ class DBHelper {
   static mapMarkerForRestaurant(restaurant, map) {
     // https://leafletjs.com/reference-1.3.0.html#marker
     const marker = new L.marker(
-      [restaurant.latlng.lat, restaurant.latlng.lng], {
+      [restaurant.latlng.lat, restaurant.latlng.lng],
+      {
         title: restaurant.name,
         alt: restaurant.name,
-        url: DBHelper.urlForRestaurant(restaurant)
-      }
+        url: DBHelper.urlForRestaurant(restaurant),
+      },
     );
     marker.addTo(newMap);
     return marker;

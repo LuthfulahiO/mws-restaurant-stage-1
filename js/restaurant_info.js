@@ -24,10 +24,11 @@ form.addEventListener('submit', e => {
     body: JSON.stringify(review),
   })
     .then(function() {
-      fillReviewsHTML();
+      newReview(review);
     })
     .catch(function(error) {
       console.log('Request failed', error);
+      newReview(review);
     });
 });
 
@@ -178,7 +179,6 @@ fillReviewsHTML = () => {
       }
       const ul = document.getElementById('reviews-list');
       reviews.reverse().forEach(review => {
-        // console.log(review);
         ul.appendChild(createReviewHTML(review));
       });
       container.appendChild(ul);
@@ -191,6 +191,14 @@ fillReviewsHTML = () => {
 /**
  * Create review HTML and add it to the webpage.
  */
+newReview = review => {
+  const ul = document.getElementById('reviews-list');
+  temp = `<li><h3>${review.name}</h3><p>${realDate(
+    review.createdAt,
+  )}</p><p>Rating: ${review.rating}</p><p>${review.comments}</p></li>`;
+  ul.insertBefore(temp, ul.children[0]);
+};
+
 createReviewHTML = review => {
   const li = document.createElement('li');
   const name = document.createElement('h3');
